@@ -52,7 +52,7 @@ pub struct RunningCommand {
 impl RunningCommand {
     pub fn new(command: &str) -> Self {
         let pty_system = NativePtySystem::default();
-        let mut cmd = CommandBuilder::new("sh");
+        let mut cmd = CommandBuilder::new("bash");
         cmd.arg("-c");
         cmd.arg(command);
 

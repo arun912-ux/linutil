@@ -9,6 +9,7 @@ use std::{
 };
 
 use clap::Parser;
+use crossterm::event::KeyModifiers;
 use crossterm::{
     cursor::RestorePosition,
     event::{self, DisableMouseCapture, Event, KeyCode, KeyEventKind},
@@ -88,6 +89,10 @@ fn run<B: Backend>(terminal: &mut Terminal<B>) -> io::Result<()> {
                 }
             } else {
                 if key.code == KeyCode::Char('q') {
+                    return Ok(());
+                }
+                // Allow ctrl+c to quit
+                if key.modifiers.contains(KeyModifiers::CONTROL) && key.code == KeyCode::Char('c') {
                     return Ok(());
                 }
                 if let Some(cmd) = custom_list.handle_key(key) {

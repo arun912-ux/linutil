@@ -28,10 +28,10 @@ pub struct CustomList {
     /// The tree data structure, to represent regular items
     /// and "directories"
     inner_tree: ego_tree::Tree<ListNode>,
-    /// This stack keeps track of our "current dirrectory". You can think of it as `pwd`. but not
+    /// This stack keeps track of our "current directory". You can think of it as `pwd`. but not
     /// just the current directory, all paths that took us here, so we can "cd .."
     visit_stack: Vec<NodeId>,
-    /// This is the state asociated with the list widget, used to display the selection in the
+    /// This is the state associated with the list widget, used to display the selection in the
     /// widget
     list_state: ListState,
     /// This stores the preview windows state. If it is None, it will not be displayed.
@@ -115,10 +115,19 @@ impl CustomList {
                     name: "Rofi Setup",
                     command: with_common_script!("commands/dotfiles/rofi-setup.sh"),
                 },
+            },
+            ListNode {
+                name: "Install Software",
+                command: ""
+            } => {
+                ListNode {
+                    name: "Java JDK (8, 11, 17, 21)",
+                    command: with_common_script!("commands/software/temurin-setup.sh"),
+                }
             }
         });
-        // We don't get a reference, but rather an id, because references are siginficantly more
-        // paintfull to manage
+        // We don't get a reference, but rather an id, because references are significantly more
+        // painful to manage
         let root_id = tree.root().id();
         Self {
             inner_tree: tree,
